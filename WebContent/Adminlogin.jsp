@@ -1,5 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,25 +22,43 @@
 <title>Admin Login | ASTU</title>
 <link rel="icon" type="image/x-icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZzPo9uv7MUCwwLTBVLgf29PIwG_Or3n2uVw&usqp=CAU">
 <style>
+  /* Body styling with background image and fade-in animation */
   body {
     background: url("https://cdn.pixabay.com/photo/2024/05/06/17/06/french-fries-8743802_1280.jpg") no-repeat center center fixed;
     background-size: cover;
     font-family: 'Roboto', sans-serif;
     perspective: 1000px;
+    animation: fadeIn 2s ease-in-out;
+  }
+
+  /* Keyframes for fade-in animation */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
   
+  /* Card styling with slide-in animation */
   .card {
     border-radius: 1rem;
     background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
+    animation: slideIn 1s ease-out;
   }
 
+  /* Keyframes for slide-in animation */
+  @keyframes slideIn {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  /* Card hover effect */
   .card:hover {
     transform: translateY(-10px);
   }
 
+  /* Logo styling with 3D effect */
   .logo {
     width: 80px;
     height: 80px;
@@ -52,6 +68,7 @@
     position: relative;
   }
 
+  /* Logo hover effect */
   .logo:hover {
     transform: 
       rotateX(10deg) 
@@ -62,6 +79,7 @@
       20px 20px 30px rgba(0, 0, 0, 0.3);
   }
 
+  /* Image container styling with 3D effect */
   .image-container {
     position: relative;
     transform-style: preserve-3d;
@@ -70,6 +88,7 @@
     border-radius: 1rem 0 0 1rem;
   }
 
+  /* Image container hover effect */
   .image-container:hover {
     transform: 
       rotateY(-15deg) 
@@ -77,6 +96,7 @@
       scale(1.05);
   }
 
+  /* Gradient overlay for image container */
   .image-container::after {
     content: '';
     position: absolute;
@@ -92,10 +112,12 @@
     transition: opacity 0.3s ease;
   }
 
+  /* Image container hover effect for gradient overlay */
   .image-container:hover::after {
     opacity: 0;
   }
 
+  /* Image styling with shadow effect */
   .image-container img {
     width: 100%;
     height: 100%;
@@ -105,6 +127,7 @@
       10px 10px 20px rgba(0,0,0,0.3);
   }
 
+  /* Button styling with gradient background and hover effect */
   .btn-dark {
     background: linear-gradient(135deg, #007bff, #00bcd4);
     border: none;
@@ -112,29 +135,61 @@
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
   }
 
+  /* Button hover effect */
   .btn-dark:hover {
     background: linear-gradient(135deg, #0056b3, #008ba3);
     transform: translateY(-3px) scale(1.05);
     box-shadow: 0 5px 15px rgba(0,123,255,0.4);
   }
 
+  /* Form control styling with focus effect */
   .form-control {
     background: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(5px);
     border: 1px solid rgba(255,255,255,0.3);
+    transition: all 0.3s ease;
   }
 
+  /* Form control focus effect */
+  .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+  }
+
+  /* Form label styling with transition */
   .form-label {
     font-weight: 500;
     color: #343a40;
+    transition: all 0.3s ease;
   }
 
+  /* Form label focus effect */
+  .form-outline input:focus + .form-label {
+    color: #007bff;
+    transform: scale(1.1);
+  }
+
+  /* Text color styling */
   .text-black {
     color: rgba(0,0,0,0.8) !important;
   }
 
+  /* Heading styling with dimming and brightening animation */
   .h1 {
     text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    animation: dimBright 2s infinite alternate;
+  }
+
+  /* Keyframes for dimming and brightening animation */
+  @keyframes dimBright {
+    0% {
+      color: rgba(0, 0, 0, 0.8);
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    100% {
+      color: rgba(0, 0, 0, 1);
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+    }
   }
 </style>
 </head>

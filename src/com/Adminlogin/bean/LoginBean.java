@@ -1,4 +1,5 @@
 package com.Adminlogin.bean;
+//import the package 
 
 import java.io.Serializable;
 

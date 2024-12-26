@@ -2,12 +2,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- Metadata and page settings -->
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin | ASTU</title>
     <link rel="icon" type="image/x-icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZzPo9uv7MUCwwLTBVLgf29PIwG_Or3n2uVw&usqp=CAU">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <!-- Internal CSS for styling -->
     <style>
+        /* Reset and basic styles */
         * {
             margin: 0;
             padding: 0;
@@ -20,7 +24,7 @@
             margin: 0 auto;
         }
 
-        /* Existing table styles */
+        /* Table styling */
         #table {
             font-family: Arial, Helvetica, sans-serif;
             border-collapse: collapse;
@@ -56,7 +60,7 @@
             text-align: center;
         }
 
-        /* Enhanced navigation styles */
+        /* Navigation bar styling */
         .nav {
             padding: 0;
             margin: 0;
@@ -122,7 +126,7 @@
             display: none;
         }
 
-        /* New Slider Styles */
+        /* Slider styling */
         .slider-container {
             margin-top: 80px;
             width: 100%;
@@ -172,7 +176,7 @@
             filter: brightness(0.7);
         }
 
-        /* Dashboard Cards */
+        /* Dashboard card styles */
         .dashboard-container {
             display: flex;
             flex-wrap: wrap;
@@ -210,6 +214,7 @@
             color: #666;
         }
 
+        /* Responsive styles */
         @media (max-width: 952px) {
             label.logo {
                 font-size: 30px;
@@ -256,6 +261,7 @@
     </style>
 </head>
 <body>
+    <!-- Navigation bar -->
     <nav class="nav">
         <div class="navbody">
             <input type="checkbox" id="check">
@@ -275,7 +281,7 @@
         </div>
     </nav>
 
-    <!-- Image Slider -->
+    <!-- Image slider -->
     <div class="slider-container">
         <div class="slide active">
             <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 800 400'%3E%3Crect fill='%23007bff' width='800' height='400'/%3E%3C/svg%3E" class="slide-img" alt="Admin Dashboard">
@@ -286,7 +292,7 @@
         </div>
     </div>
 
-    <!-- Dashboard Cards -->
+    <!-- Dashboard cards -->
     <div class="dashboard-container">
         <div class="dashboard-card">
             <i class="fas fa-users"></i>
@@ -316,10 +322,10 @@
         const slides = document.querySelectorAll('.slide');
 
         function showSlides() {
-            slides.forEach(slide => slide.classList.remove('active'));
+            slides.forEach(slide => slide.classList.remove('active')); // Remove active class from all slides
             slideIndex++;
-            if (slideIndex > slides.length) {slideIndex = 1}
-            slides[slideIndex-1].classList.add('active');
+            if (slideIndex > slides.length) {slideIndex = 1} // Reset index if it exceeds slide count
+            slides[slideIndex-1].classList.add('active'); // Add active class to the current slide
             setTimeout(showSlides, 5000); // Change slide every 5 seconds
         }
 

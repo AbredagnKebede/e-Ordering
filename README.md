@@ -4,6 +4,7 @@ Welcome to the VS Code Java world! This guide will help you set up your Java pro
 Follow these steps to get started writing and running Java code smoothly.
 
 ##Folder Structure
+
 By default, the workspace for your Java project contains the following folders:
 
 src: This folder is where you will store your source code files, such as .java files.
@@ -15,12 +16,16 @@ bin: This folder holds the compiled files, such as .class files, generated when 
 If you'd like to customize the folder structure, you can easily adjust the settings by opening the .vscode/settings.json file and modifying the related configuration.
 
 ##Dependency Management
+
 VS Code provides an easy-to-use JAVA PROJECTS view that allows you to manage your project’s dependencies.
 
 You can add and manage external libraries using the "Add Dependency" feature in the JAVA PROJECTS view.
 For more advanced dependency management, you can refer to the VS Code Java Dependency Management Guide.
+
 ##Running the Project
+
 Create a WAR File
+
 To run your Java project on a Tomcat server in Visual Studio Code, you first need to create a WAR file. Here’s how you can do that:
 
 1.Generate the WAR File:

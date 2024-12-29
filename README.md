@@ -1,4 +1,5 @@
 ##Getting Started
+
 Welcome to the VS Code Java world! This guide will help you set up your Java project in Visual Studio Code (VS Code) and run it in a Tomcat server environment.
 Follow these steps to get started writing and running Java code smoothly.
 

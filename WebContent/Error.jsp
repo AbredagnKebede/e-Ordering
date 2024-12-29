@@ -37,7 +37,23 @@
             color: #d4fc79;
             font-size: 1em;
             line-height: 1.5;
-            margin: 0;
+            margin-bottom: 20px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #1e90ff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .button:hover {
+            background-color: #4682b4;
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -45,6 +61,7 @@
 <div class="message-container">
     <h1>Access Denied</h1>
     <p>Please ensure you enter your credentials correctly to proceed.</p>
+    <a href="login.jsp" class="button">Back to Login</a>
 </div>
 </body>
 </html>

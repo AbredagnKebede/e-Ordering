@@ -4,8 +4,10 @@
 <html>
 <head>
 <title>Order Management</title>
+<!-- Favicon for the page -->
 <link rel="icon" type="image/x-icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZzPo9uv7MUCwwLTBVLgf29PIwG_Or3n2uVw&usqp=CAU">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Font Awesome for icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 <style>
 
@@ -220,6 +222,7 @@
     <div>
         <div class="card">
             <div class="card-body">
+                <!-- Conditional form rendering based on whether 'order' is null or not -->
                 <c:if test="${order != null}">
                     <form action="update3" method="post">
                 </c:if>
@@ -229,6 +232,7 @@
 
                 <caption>
                     <h2 style="font-size:40px;">
+                        <!-- Display 'Edit Order' if 'order' is not null, otherwise 'Add New Order' -->
                         <c:if test="${order != null}">
                         <center>Edit Order</center>
                     </c:if>
@@ -238,10 +242,12 @@
                     </h2>
                 </caption>
 
+                <!-- Hidden input for order ID if 'order' is not null -->
                 <c:if test="${order != null}">
                     <input type="hidden" name="o_id" value="<c:out value='${order.o_id}' />" />
                 </c:if>
 
+                <!-- Form fields for order details -->
                 <fieldset>
                     <label>Product ID</label> <input type="text"
                         value="<c:out value='${order.p_id}' />" class="feildset"
@@ -268,6 +274,7 @@
                 </fieldset>
             
                 <br>
+                <!-- Save button -->
                 <center><button type="submit" class="savebtn">Save</button></center>
                 </form>
             </div>

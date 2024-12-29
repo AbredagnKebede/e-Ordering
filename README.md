@@ -34,15 +34,19 @@ bash
 Copy code
 jar -cvf your-project.war -C WebContent/ .
 Replace your-project.war with your preferred WAR file name. Ensure that WebContent/ is the correct directory containing your web application content (like WEB-INF, JSP files, etc.).
+
 2.Deploy the WAR File on Tomcat:
 
 Open Tomcat (either using the VS Code extension or your local Tomcat installation).
 Right-click on the newly created WAR file and choose "Run on Tomcat". This will deploy the WAR file to the Tomcat server.
+
 3.View the Application in the Browser:
 
 After deploying the WAR file, right-click on the Tomcat server and select "Open in Browser" to open your application in your default web browser.
 You should now be able to access and test your web application live.
+
 ##Troubleshooting
+
 ~Tomcat Server Not Running: If you encounter issues with Tomcat not running, make sure the Tomcat server is properly installed and running in your environment. You may need the Tomcat for VS Code extension for smoother integration.
 
 ~WAR Deployment Errors: If the WAR file fails to deploy, verify the directory structure when creating the WAR file. It should include all necessary directories and files (e.g., WEB-INF, index.jsp, etc.).

@@ -202,7 +202,7 @@
     <div class="navbody">
       <input type="checkbox" id="check">
       <label for="check" class="checkbtn">
-        <i class="fas fa-bars"></i>
+        <i class="fas fa-bars"></i> <!-- Hamburger icon for mobile view -->
       </label>
       <a href="index.jsp" style="padding:20px; "><label class="logo">ASTU</label></a>
       

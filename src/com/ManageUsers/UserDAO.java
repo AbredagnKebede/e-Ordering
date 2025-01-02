@@ -8,50 +8,57 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
- * AbstractDAO.java This DAO class provides CRUD database operations for the
- * table users in the database.
- * 
- * 
- *
+ * UserDAO.java
+ * This DAO class provides CRUD database operations for the table users in the database.
  */
 public class UserDAO {
 	private String jdbcURL = "jdbc:mysql://localhost:3306/yumride?useSSL=false";
 	private String jdbcUsername = "root";
 	private String jdbcPassword = "bare@coat";
 
-	private static final String INSERT_USERS_SQL = "INSERT INTO users" + "  (name,email,phone,address,username,password,role) VALUES "
-			+ " (?, ?, ?, ?, ?, ?, ?);";
+	// SQL statements for CRUD operations
+	private static final String INSERT_USERS_SQL = "INSERT INTO users (name,email,phone,address,username,password,role) VALUES (?, ?, ?, ?, ?, ?, ?);";
+	private static final String SELECT_USER_BY_ID = "SELECT id,name,email,phone,address,username,password,role FROM users WHERE id = ?";
+	private static final String SELECT_ALL_USERS = "SELECT * FROM users";
+	private static final String DELETE_USERS_SQL = "DELETE FROM users WHERE id = ?;";
+	private static final String UPDATE_USERS_SQL = "UPDATE users SET name = ?, email = ?, phone = ?, address = ?, username = ?, password = ?, role = ? WHERE id = ?;";
 
-	private static final String SELECT_USER_BY_ID = "select id,name,email,phone,address,username,password,role from users where id =?";
-	private static final String SELECT_ALL_USERS = "select * from users";
-	private static final String DELETE_USERS_SQL = "delete from users where id = ?;";
-	private static final String UPDATE_USERS_SQL = "update users set name = ?,email= ?, phone =?, address =?, username =?, password =?, role =? where id = ?;";
-
+	/**
+	 * Default constructor.
+	 */
 	public UserDAO() {
 	}
 
+	/**
+	 * Establishes a connection to the database.
+	 * 
+	 * @return Connection object or null if the connection fails.
+	 */
 	protected Connection getConnection() {
 		Connection connection = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
+			Class.forName("com.mysql.jdbc.Driver"); // Load MySQL JDBC Driver
+			connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword); // Establish connection
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			printSQLException(e); // Print SQL exceptions
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+			System.out.println("MySQL JDBC Driver not found!"); // Driver not found
 			e.printStackTrace();
 		}
-		return connection;
+		return connection; // Return connection object
 	}
 
+	/**
+	 * Inserts a new user into the database.
+	 * 
+	 * @param user The User object containing user details.
+	 * @throws SQLException If there is an error during the SQL operation.
+	 */
 	public void insertUser(User user) throws SQLException {
-		System.out.println(INSERT_USERS_SQL);
-		// try-with-resource statement will auto close the connection.
 		try (Connection connection = getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL)) {
+			// Set parameters for the prepared statement
 			preparedStatement.setString(1, user.getName());
 			preparedStatement.setString(2, user.getEmail());
 			preparedStatement.setString(3, user.getPhone());
@@ -59,88 +66,97 @@ public class UserDAO {
 			preparedStatement.setString(5, user.getUsername());
 			preparedStatement.setString(6, user.getPassword());
 			preparedStatement.setString(7, user.getRole());
-			System.out.println(preparedStatement);
-			preparedStatement.executeUpdate();
+			preparedStatement.executeUpdate(); // Execute the insert operation
 		} catch (SQLException e) {
-			printSQLException(e);
+			printSQLException(e); // Print SQL exceptions
 		}
 	}
 
+	/**
+	 * Selects a user by ID from the database.
+	 * 
+	 * @param id The ID of the user to be selected.
+	 * @return The User object or null if not found.
+	 */
 	public User selectUser(int id) {
 		User user = null;
-		// Step 1: Establishing a Connection
 		try (Connection connection = getConnection();
-				// Step 2:Create a statement using connection object
-				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_ID);) {
-			preparedStatement.setInt(1, id);
-			System.out.println(preparedStatement);
-			// Step 3: Execute the query or update query
-			ResultSet rs = preparedStatement.executeQuery();
+				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_ID)) {
+			preparedStatement.setInt(1, id); // Set the ID parameter
+			ResultSet rs = preparedStatement.executeQuery(); // Execute query
 
-			// Step 4: Process the ResultSet object.
-			while (rs.next()) {
-				String name = rs.getString("name");
-				String email = rs.getString("email");
-				String phone= rs.getString("phone");
-				String address = rs.getString("address");
-				String username = rs.getString("username");
-				String password = rs.getString("password");
-				String role = rs.getString("role");
-				user = new User(id,name,email,phone,address,username,password,role);
+			// Process the ResultSet
+			if (rs.next()) {
+				user = new User(id, rs.getString("name"), rs.getString("email"), rs.getString("phone"),
+						rs.getString("address"), rs.getString("username"), rs.getString("password"),
+						rs.getString("role")); // Create User object from ResultSet
 			}
 		} catch (SQLException e) {
-			printSQLException(e);
+			printSQLException(e); // Print SQL exceptions
 		}
-		return user;
+		return user; // Return the User object or null
 	}
 
+	/**
+	 * Selects all users from the database.
+	 * 
+	 * @return A list of all users.
+	 */
 	public List<User> selectAllUsers() {
-
-		// using try-with-resources to avoid closing resources (boiler plate code)
-		List<User> users = new ArrayList<>();
-		// Step 1: Establishing a Connection
+		List<User> users = new ArrayList<>(); // List to hold users
 		try (Connection connection = getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_USERS)) {
+			ResultSet rs = preparedStatement.executeQuery(); // Execute query
 
-				// Step 2:Create a statement using connection object
-			PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_USERS);) {
-			System.out.println(preparedStatement);
-			// Step 3: Execute the query or update query
-			ResultSet rs = preparedStatement.executeQuery();
-
-			// Step 4: Process the ResultSet object.
+			// Process the ResultSet
 			while (rs.next()) {
 				int id = rs.getInt("id");
 				String name = rs.getString("name");
 				String email = rs.getString("email");
-				String phone= rs.getString("phone");
+				String phone = rs.getString("phone");
 				String address = rs.getString("address");
 				String username = rs.getString("username");
 				String password = rs.getString("password");
 				String role = rs.getString("role");
-				
-				
-				users.add(new User(id,name,email,phone,address,username,password,role));
+
+				// Add User object to the list
+				users.add(new User(id, name, email, phone, address, username, password, role));
 			}
 		} catch (SQLException e) {
-			printSQLException(e);
+			printSQLException(e); // Print SQL exceptions
 		}
-		return users;
+		return users; // Return the list of users
 	}
 
+	/**
+	 * Deletes a user by ID from the database.
+	 * 
+	 * @param id The ID of the user to be deleted.
+	 * @return True if the user was deleted, false otherwise.
+	 * @throws SQLException If there is an error during the SQL operation.
+	 */
 	public boolean deleteUser(int id) throws SQLException {
 		boolean rowDeleted;
 		try (Connection connection = getConnection();
-				PreparedStatement statement = connection.prepareStatement(DELETE_USERS_SQL);) {
-			statement.setInt(1, id);
-			rowDeleted = statement.executeUpdate() > 0;
+				PreparedStatement statement = connection.prepareStatement(DELETE_USERS_SQL)) {
+			statement.setInt(1, id); // Set the ID parameter
+			rowDeleted = statement.executeUpdate() > 0; // Execute delete operation
 		}
-		return rowDeleted;
+		return rowDeleted; // Return the result of the delete operation
 	}
 
+	/**
+	 * Updates a user's details in the database.
+	 * 
+	 * @param user The User object containing updated user details.
+	 * @return True if the user was updated, false otherwise.
+	 * @throws SQLException If there is an error during the SQL operation.
+	 */
 	public boolean updateUser(User user) throws SQLException {
 		boolean rowUpdated;
 		try (Connection connection = getConnection();
-				PreparedStatement statement = connection.prepareStatement(UPDATE_USERS_SQL);) {
+				PreparedStatement statement = connection.prepareStatement(UPDATE_USERS_SQL)) {
+			// Set parameters for the prepared statement
 			statement.setString(1, user.getName());
 			statement.setString(2, user.getEmail());
 			statement.setString(3, user.getPhone());
@@ -150,25 +166,29 @@ public class UserDAO {
 			statement.setString(7, user.getRole());
 			statement.setInt(8, user.getId());
 
-			rowUpdated = statement.executeUpdate() > 0;
+			rowUpdated = statement.executeUpdate() > 0; // Execute update operation
 		}
-		return rowUpdated;
+		return rowUpdated; // Return the result of the update operation
 	}
 
+	/**
+	 * Prints SQL exceptions to the console.
+	 * 
+	 * @param ex The SQLException to be printed.
+	 */
 	private void printSQLException(SQLException ex) {
 		for (Throwable e : ex) {
 			if (e instanceof SQLException) {
-				e.printStackTrace(System.err);
+				e.printStackTrace(System.err); // Print stack trace
 				System.err.println("SQLState: " + ((SQLException) e).getSQLState());
 				System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
 				System.err.println("Message: " + e.getMessage());
 				Throwable t = ex.getCause();
 				while (t != null) {
 					System.out.println("Cause: " + t);
-					t = t.getCause();
+					t = t.getCause(); // Print cause of the exception
 				}
 			}
 		}
 	}
-
 }

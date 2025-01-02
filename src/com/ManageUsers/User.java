@@ -33,7 +33,6 @@ public class User {
 	 * @param role     Role assigned to the user
 	 */
 	public User(String name, String email, String phone, String address, String username, String password, String role) {
-		super();
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
@@ -57,7 +56,6 @@ public class User {
 	 */
 	public User(int id, String name, String email, String phone, String address, String username, String password,
 			String role) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
@@ -150,65 +148,6 @@ public class User {
 	}
 
 	/**
-	 * Sets the address of the user.
-	 * 
-	 * @param address User address
-	 */
-	public void setAddress(String address) {
-		this.address = address;
-	}
+	 * Sets the address
 
-	/**
-	 * Gets the username of the user.
-	 * 
-	 * @return User username
-	 */
-	public String getUsername() {
-		return username;
-	}
-
-	/**
-	 * Sets the username of the user.
-	 * 
-	 * @param username User username
-	 */
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	/**
-	 * Gets the password of the user.
-	 * 
-	 * @return User password
-	 */
-	public String getPassword() {
-		return password;
-	}
-
-	/**
-	 * Sets the password of the user.
-	 * 
-	 * @param password User password
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	/**
-	 * Gets the role of the user.
-	 * 
-	 * @return User role
-	 */
-	public String getRole() {
-		return role;
-	}
-
-	/**
-	 * Sets the role of the user.
-	 * 
-	 * @param role User role
-	 */
-	public void setRole(String role) {
-		this.role = role;
-	}
-}
+	

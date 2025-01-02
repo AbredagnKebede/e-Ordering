@@ -2,159 +2,155 @@ package com.ManageMenu;
 
 /**
  * Product.java
- * 
- * This is a model class representing a Product entity in the system.
- * It contains details such as id, name, category, price, and image for each product.
- * This class is typically used for storing product information in an e-commerce or menu management system.
- * 
- * @version 1.0
- * @since 2024-12-31
+ *
+ * This is the Product class for managing product info.
+ * It holds details like id, name, category, price, and image.
+ * Used for storing product details for apps like menus or shopping systems.
  */
 public class Product {
 
-    // Unique identifier for the product (typically from a database)
-    protected int id;
+	// Unique ID for the product (e.g., from the database)
+	protected int productId;
 
-    // Name of the product (e.g., "Apple", "Pizza")
-    protected String name;
+	// Product's name (e.g., "Burger", "Juice")
+	protected String productName;
 
-    // Category to which the product belongs (e.g., "Fruits", "Snacks")
-    protected String category;
+	// The category this product belongs to (e.g., "Food", "Beverages")
+	protected String productCategory;
 
-    // Price of the product
-    protected double price;
+	// How much the product costs
+	protected double productPrice;
 
-    // Image URL or path to an image representing the product
-    protected String image;
-    
-    // Default constructor (no arguments)
-    // This is useful for cases where a product object is created but the values are set later
-    public Product() {
-    }
+	// URL or file path to the product's image
+	protected String productImage;
 
-    /**
-     * Constructor to initialize the product with name, category, price, and image.
-     * 
-     * @param name     The name of the product.
-     * @param category The category of the product.
-     * @param price    The price of the product.
-     * @param image    The image representing the product (URL or path).
-     */
-    public Product(String name, String category, double price, String image) {
-        super(); // Optional, calls the superclass constructor (Object class)
-        this.name = name;
-        this.category = category;
-        this.price = price;
-        this.image = image;
-    }
+	// Default constructor (no parameters needed here)
+	public Product() {
+	}
 
-    /**
-     * Constructor to initialize all fields of the product, including its unique ID.
-     * 
-     * @param id       The unique identifier for the product.
-     * @param name     The name of the product.
-     * @param category The category of the product.
-     * @param price    The price of the product.
-     * @param image    The image representing the product (URL or path).
-     */
-    public Product(int id, String name, String category, double price, String image) {
-        super(); // Optional, calls the superclass constructor (Object class)
-        this.id = id;
-        this.name = name;
-        this.category = category;
-        this.price = price;
-        this.image = image;
-    }
+	/**
+	 * Constructor to set up the product with some details.
+	 *
+	 * @param productName     The name of the product.
+	 * @param productCategory The category of the product.
+	 * @param productPrice    The price of the product.
+	 * @param productImage    The image URL or file path.
+	 */
+	public Product(String productName, String productCategory, double productPrice, String productImage) {
+		super(); // Calls the parent constructor (just a habit, not needed here)
+		this.productName = productName;
+		this.productCategory = productCategory;
+		this.productPrice = productPrice;
+		this.productImage = productImage;
+	}
 
-    // Getter and setter methods for each field (id, name, category, price, and image)
+	/**
+	 * Constructor to set all fields, including the unique product ID.
+	 *
+	 * @param productId       The unique ID of the product.
+	 * @param productName     The name of the product.
+	 * @param productCategory The category of the product.
+	 * @param productPrice    The price of the product.
+	 * @param productImage    The image URL or file path.
+	 */
+	public Product(int productId, String productName, String productCategory, double productPrice, String productImage) {
+		super(); // Calls the parent constructor
+		this.productId = productId;
+		this.productName = productName;
+		this.productCategory = productCategory;
+		this.productPrice = productPrice;
+		this.productImage = productImage;
+	}
 
-    /**
-     * Get the unique ID of the product.
-     * 
-     * @return The unique product ID.
-     */
-    public int getId() {
-        return id;
-    }
+	// Getter and Setter methods for all the fields
 
-    /**
-     * Set the unique ID of the product.
-     * 
-     * @param id The unique product ID.
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
+	/**
+	 * Gets the unique ID of the product.
+	 *
+	 * @return The product's ID.
+	 */
+	public int getProductId() {
+		return productId;
+	}
 
-    /**
-     * Get the name of the product.
-     * 
-     * @return The name of the product.
-     */
-    public String getName() {
-        return name;
-    }
+	/**
+	 * Sets the unique ID of the product.
+	 *
+	 * @param productId The product's ID.
+	 */
+	public void setProductId(int productId) {
+		this.productId = productId;
+	}
 
-    /**
-     * Set the name of the product.
-     * 
-     * @param name The name of the product.
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
+	/**
+	 * Gets the name of the product.
+	 *
+	 * @return The product's name.
+	 */
+	public String getProductName() {
+		return productName;
+	}
 
-    /**
-     * Get the category of the product.
-     * 
-     * @return The category of the product.
-     */
-    public String getCategory() {
-        return category;
-    }
+	/**
+	 * Sets the name of the product.
+	 *
+	 * @param productName The product's name.
+	 */
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
 
-    /**
-     * Set the category of the product.
-     * 
-     * @param category The category of the product.
-     */
-    public void setCategory(String category) {
-        this.category = category;
-    }
+	/**
+	 * Gets the category of the product.
+	 *
+	 * @return The product's category.
+	 */
+	public String getProductCategory() {
+		return productCategory;
+	}
 
-    /**
-     * Get the price of the product.
-     * 
-     * @return The price of the product.
-     */
-    public double getPrice() {
-        return price;
-    }
+	/**
+	 * Sets the category of the product.
+	 *
+	 * @param productCategory The product's category.
+	 */
+	public void setProductCategory(String productCategory) {
+		this.productCategory = productCategory;
+	}
 
-    /**
-     * Set the price of the product.
-     * 
-     * @param price The price of the product.
-     */
-    public void setPrice(double price) {
-        this.price = price;
-    }
+	/**
+	 * Gets the price of the product.
+	 *
+	 * @return The product's price.
+	 */
+	public double getProductPrice() {
+		return productPrice;
+	}
 
-    /**
-     * Get the image of the product.
-     * 
-     * @return The image URL or path of the product.
-     */
-    public String getImage() {
-        return image;
-    }
+	/**
+	 * Sets the price of the product.
+	 *
+	 * @param productPrice The product's price.
+	 */
+	public void setProductPrice(double productPrice) {
+		this.productPrice = productPrice;
+	}
 
-    /**
-     * Set the image of the product.
-     * 
-     * @param image The image URL or path of the product.
-     */
-    public void setImage(String image) {
-        this.image = image;
-    }
+	/**
+	 * Gets the image URL or path of the product.
+	 *
+	 * @return The product's image URL/path.
+	 */
+	public String getProductImage() {
+		return productImage;
+	}
+
+	/**
+	 * Sets the image URL or path of the product.
+	 *
+	 * @param productImage The product's image URL/path.
+	 */
+	public void setProductImage(String productImage) {
+		this.productImage = productImage;
+	}
 }

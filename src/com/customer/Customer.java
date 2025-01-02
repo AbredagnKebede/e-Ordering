@@ -1,18 +1,47 @@
 package com.customer;
 
+/**
+ * The Customer class represents a customer with various attributes.
+ */
 public class Customer {
    
+    // Unique identifier for the customer
 	private int id;
+    
+    // Customer's full name
     private String name;
+    
+    // Customer's email address
     private String email;
+    
+    // Customer's phone number
     private String phone;
+    
+    // Customer's physical address
     private String address;
+    
+    // Customer's username for login
     private String username;
+    
+    // Customer's password for login
     private String password;
+    
+    // Role of the customer (e.g., admin, user)
     private String role;
     
-    public Customer(int id, String name, String email, String phone, String address, String username, String password,
-			String role) {
+    /**
+     * Constructor to initialize a Customer object with all attributes.
+     *
+     * @param id Unique identifier for the customer
+     * @param name Full name of the customer
+     * @param email Email address of the customer
+     * @param phone Phone number of the customer
+     * @param address Physical address of the customer
+     * @param username Username for the customer
+     * @param password Password for the customer
+     * @param role Role of the customer
+     */
+    public Customer(int id, String name, String email, String phone, String address, String username, String password, String role) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -23,6 +52,8 @@ public class Customer {
 		this.password = password;
 		this.role = role;
 	}
+
+    // Getters and setters for each attribute
 
 	public int getId() {
 		return id;
@@ -87,6 +118,4 @@ public class Customer {
 	public void setRole(String role) {
 		this.role = role;
 	}
-
-
 }

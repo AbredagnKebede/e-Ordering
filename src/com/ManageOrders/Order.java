@@ -7,6 +7,7 @@ package com.ManageOrders;
  *
  */
 public class Order {
+	//we use the protected for security 
 	protected int o_id;
 	protected int p_id;
 	protected int u_id;

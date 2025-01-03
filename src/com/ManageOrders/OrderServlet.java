@@ -22,12 +22,15 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/OrderServlet")
 public class OrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	//Unique identifier for serialization
+ 
 	private OrderDAO orderDAO;
 	
 	public void init() {
 		orderDAO = new OrderDAO();
+		// Instantiate the OrderDAO to interact with the database
 	}
-
+// Handles POST requests by delegating to doGet method
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);

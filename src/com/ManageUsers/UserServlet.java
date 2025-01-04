@@ -105,7 +105,7 @@ public class UserServlet extends HttpServlet {
     }
 
     /**
-     * Inserts a new user into the database.
+     * Inserts a new user into the database. its so simple
      */
     private void insertUser(HttpServletRequest request, HttpServletResponse response) 
             throws SQLException, IOException {

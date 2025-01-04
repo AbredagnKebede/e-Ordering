@@ -140,7 +140,7 @@ public class User {
 
 	/**
 	 * Gets the address of the user.
-	 * 
+	 * yes
 	 * @return User address
 	 */
 	public String getAddress() {

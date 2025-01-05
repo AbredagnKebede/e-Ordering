@@ -1,18 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- Setting the character encoding and page metadata -->
+    <!-- Meta information and external resources -->
     <meta charset="ISO-8859-1">
     <title>Register</title>
-
-    <!-- Linking external resources: favicon, fonts, and stylesheets -->
     <link rel="icon" type="image/x-icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZzPo9uv7MUCwwLTBVLgf29PIwG_Or3n2uVw&usqp=CAU">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet"/>
 
+    <!-- Internal CSS for custom styling -->
     <style>
         /* Custom background gradient and card styling */
         .gradient-custom-3 {
@@ -185,11 +183,12 @@
                                 </div>
 
                                 <!-- Link to login page -->
-                                <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="login.jsp" class="fw-bold text-body"><u>Login here</u></a></p>
+                                <p class="text-center text-muted mt-5 mb-0">Already have an account? <a href="login.jsp" class="fw-bold text-body"><u>Login here</u></a></p>
                             </form>
                         </div>
                     </div>
                 </div>
+
                 <!-- Footer text -->
                 <div class="footer-text text-center mt-4">
                     <h4>Save your time!</h4>

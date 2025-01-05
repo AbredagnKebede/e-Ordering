@@ -5,28 +5,35 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 
+<%-- Retrieve the user object from session if authenticated --%>
 <%
 User auth = (User) request.getSession().getAttribute("auth");
 if (auth != null) {
-    request.setAttribute("person", auth);
+    request.setAttribute("person", auth); // Store user info in request
 }
+
+<%-- Instantiate ProductDao to retrieve product data from database --%>
 ProductDao pd = new ProductDao(DbCon.getConnection());
-List<Product> products = pd.getAllProducts();
-List<Product> burger_products = pd.getAllBurgers();
-List<Product> desert_products = pd.getAllDeserts();
-List<Product> beverage_products = pd.getAllBeverages();
+List<Product> products = pd.getAllProducts(); // Retrieve all products
+List<Product> burger_products = pd.getAllBurgers(); // Retrieve burger products
+List<Product> desert_products = pd.getAllDeserts(); // Retrieve dessert products
+List<Product> beverage_products = pd.getAllBeverages(); // Retrieve beverage products
+
+<%-- Retrieve cart list from session if available --%>
 ArrayList<Cart> cart_list = (ArrayList<Cart>) session.getAttribute("cart-list");
 if (cart_list != null) {
-    request.setAttribute("cart_list", cart_list);
+    request.setAttribute("cart_list", cart_list); // Store cart data in request
 }
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <%@include file="/includes/head.jsp"%>
+    <%@include file="/includes/head.jsp"%> <!-- Include common head content -->
     <title>Abc Order</title>
     <link rel="icon" type="image/x-icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZzPo9uv7MUCwwLTBVLgf29PIwG_Or3n2uVw&usqp=CAU">
     <style>
+        <!-- Custom CSS for layout and style -->
         html {
             scroll-behavior: smooth;
         }
@@ -38,7 +45,7 @@ if (cart_list != null) {
             color: #343a40;
             transition: all 0.3s ease;
             font-weight: 500;
-            padding: 10px 15px;  
+            padding: 10px 15px;
             margin: 0 5px;
             border-radius: 25px;
         }
@@ -57,7 +64,7 @@ if (cart_list != null) {
             text-align: center;
         }
         .search-input {
-            padding: 8px; 
+            padding: 8px;
             border-radius: 25px;
             border: 1px solid #ced4da;
             width: 250px; /* Reduced width */
@@ -162,20 +169,20 @@ if (cart_list != null) {
             top: 0;
             z-index: 1000;
             background-color: rgba(255,255,255,0.9);
-            padding: 0.1px 0; 
+            padding: 0.1px 0;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-
     </style>
 </head>
 
 <body>
-    <%@include file="/includes/navbar.jsp"%>
-    
+    <%@include file="/includes/navbar.jsp"%> <!-- Include navbar -->
+
     <div class="search-container">
         <input type="text" class="search-input" id="search" placeholder="Search for products..." onkeyup="searchProducts()">
     </div>
 
+    <!-- Navigation links for different product categories -->
     <ul class="nav justify-content-center">
         <li class="nav-item">
             <a class="nav-link" href="#section0"><h4>All</h4></a>
@@ -191,6 +198,7 @@ if (cart_list != null) {
         </li>
     </ul>
 
+    <!-- Section displaying all products -->
     <div class="container" id="section0">
         <div class="card-header my-3 text-center">All Categories</div>
         <div class="row" id="product-list">
@@ -217,7 +225,7 @@ if (cart_list != null) {
         </div>
     </div>
 
-    <!-- Additional sections for Burgers, Desserts, and Beverages -->
+    <!-- Additional sections for Burgers, Desserts, and Beverages, similar to All section -->
     <div class="container" id="section1">
         <div class="card-header my-3 text-center">Burgers</div>
         <div class="row">
@@ -281,12 +289,12 @@ if (cart_list != null) {
         </div>
     </div>
 
-    <br>
-    <br>
+    <br><br>
 
-    <%@include file="/includes/footer.jsp"%>
+    <%@include file="/includes/footer.jsp"%> <!-- Include footer -->
 
     <script>
+        <!-- JavaScript for search functionality -->
         function searchProducts() {
             const input = document.getElementById('search').value.toLowerCase();
             const items = document.querySelectorAll('.product-item');

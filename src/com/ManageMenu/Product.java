@@ -44,15 +44,7 @@ public class Product {
 		this.productImage = productImage;
 	}
 
-	/**
-	 * Constructor to set all fields, including the unique product ID.
-	 *
-	 * @param productId       The unique ID of the product.
-	 * @param productName     The name of the product.
-	 * @param productCategory The category of the product.
-	 * @param productPrice    The price of the product.
-	 * @param productImage    The image URL or file path.
-	 */
+	
 	public Product(int productId, String productName, String productCategory, double productPrice, String productImage) {
 		super(); // Calls the parent constructor
 		this.productId = productId;
@@ -62,13 +54,7 @@ public class Product {
 		this.productImage = productImage;
 	}
 
-	// Getter and Setter methods for all the fields
-
-	/**
-	 * Gets the unique ID of the product.
-	 *
-	 * @return The product's ID.
-	 */
+	
 	public int getProductId() {
 		return productId;
 	}
@@ -91,11 +77,7 @@ public class Product {
 		return productName;
 	}
 
-	/**
-	 * Sets the name of the product.
-	 *
-	 * @param productName The product's name.
-	 */
+	
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
@@ -118,11 +100,7 @@ public class Product {
 		this.productCategory = productCategory;
 	}
 
-	/**
-	 * Gets the price of the product.
-	 *
-	 * @return The product's price.
-	 */
+	
 	public double getProductPrice() {
 		return productPrice;
 	}

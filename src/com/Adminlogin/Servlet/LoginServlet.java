@@ -13,41 +13,56 @@ import com.Adminlogin.DAO.LoginDao;
 import com.Adminlogin.bean.LoginBean;
 
 /**
- * @email abredagn@gmail.com
+ * Servlet implementation for Admin login functionality.
+ * Handles login requests and validates user credentials.
+ * @developer abredagn@gmail.com
  */
-
 @WebServlet("/Adminlogin")
 public class LoginServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private LoginDao loginDao;
+    private static final long serialVersionUID = 1L;
 
-	public void init() {
-		loginDao = new LoginDao();
-	}
+    // DAO object for handling login-related database operations
+    private LoginDao loginDao;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+    /**
+     * Initializes the LoginDao instance when the servlet is first loaded.
+     */
+    public void init() {
+        loginDao = new LoginDao();
+    }
 
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		LoginBean loginBean = new LoginBean();
-		loginBean.setUsername(username);
-		loginBean.setPassword(password);
+    /**
+     * Handles POST requests for the login functionality.
+     * @param request  HttpServletRequest object containing client request data
+     * @param response HttpServletResponse object for sending response data to the client
+     * @throws ServletException If an input or output error is detected
+     * @throws IOException If a servlet-specific error occurs
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-		try {
-			if (loginDao.validate(loginBean)) {
-				//HttpSession session = request.getSession();
-				// session.setAttribute("username",username);
-				response.sendRedirect("Admin_index.jsp");
-			} else {
-				HttpSession session = request.getSession();
-				//session.setAttribute("user", username);
-				//response.sendRedirect("Adminlogin.jsp");
-				response.sendRedirect("Error.jsp");
-				
-			}
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
+        // Retrieve username and password from the login form
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        // Create a LoginBean instance and set its properties with the user input
+        LoginBean loginBean = new LoginBean();
+        loginBean.setUsername(username);
+        loginBean.setPassword(password);
+
+        try {
+            // Validate user credentials using LoginDao
+            if (loginDao.validate(loginBean)) {
+                // Redirect to Admin index page upon successful login
+                response.sendRedirect("Admin_index.jsp");
+            } else {
+                // On login failure, create a session and redirect to an error page
+                HttpSession session = request.getSession();
+                response.sendRedirect("Error.jsp");
+            }
+        } catch (ClassNotFoundException e) {
+            // Handle exceptions related to database operations or class loading
+            e.printStackTrace();
+        }
+    }
 }

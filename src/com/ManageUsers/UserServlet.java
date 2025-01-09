@@ -19,56 +19,63 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/")
 public class UserServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private UserDAO userDAO; // DAO instance for user operations
+    private static final String USER_LIST_JSP = "ManageUsers/user-list.jsp";
+    private static final String USER_FORM_JSP = "ManageUsers/user-form.jsp";
+    private UserDAO userDAO;
 
     /**
      * Initializes the servlet and creates an instance of UserDAO.
      */
+    @Override
     public void init() {
-        userDAO = new UserDAO(); // Initialize the UserDAO instance
+        userDAO = new UserDAO();
+        log("UserServlet initialized.");
     }
 
     /**
      * Handles POST requests by delegating to the doGet method.
      */
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request, response); // Delegate POST requests to doGet
+        doGet(request, response);
     }
 
     /**
      * Handles GET requests and directs to the appropriate action based on the URL path.
      */
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getServletPath(); // Get the requested action
+        String action = request.getServletPath();
 
         try {
             switch (action) {
-            case "/new":
-                showNewForm(request, response); // Show form to create a new user
-                break;
-            case "/insertuser":
-                insertUser(request, response); // Insert a new user
-                break;
-            case "/deleteuser":
-                deleteUser(request, response); // Delete a user
-                break;
-            case "/edituser":
-                showEditForm(request, response); // Show form to edit an existing user
-                break;
-            case "/updateuser":
-                updateUser(request, response); // Update user information
-                break;
-            case "/userlist":
-                listUser(request, response); // List all users
-                break;
-            default:
-                System.out.println("Default action: no specific route matched."); // Log default action
-                break;
+                case "/new":
+                    showNewForm(request, response);
+                    break;
+                case "/insertuser":
+                    insertUser(request, response);
+                    break;
+                case "/deleteuser":
+                    deleteUser(request, response);
+                    break;
+                case "/edituser":
+                    showEditForm(request, response);
+                    break;
+                case "/updateuser":
+                    updateUser(request, response);
+                    break;
+                case "/userlist":
+                    listUser(request, response);
+                    break;
+                default:
+                    response.sendError(HttpServletResponse.SC_NOT_FOUND, "The requested action is not supported.");
+                    log("Unhandled action: " + action);
             }
         } catch (SQLException ex) {
-            throw new ServletException(ex); // Handle SQL exceptions
+            log("SQL Exception: " + ex.getMessage(), ex);
+            throw new ServletException("Database access error: " + ex.getMessage(), ex);
         }
     }
 
@@ -77,10 +84,9 @@ public class UserServlet extends HttpServlet {
      */
     private void listUser(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
-        List<User> listUser = userDAO.selectAllUsers(); // Fetch all users from the database
-        request.setAttribute("listUser", listUser); // Set the user list as a request attribute
-        RequestDispatcher dispatcher = request.getRequestDispatcher("ManageUsers/user-list.jsp");
-        dispatcher.forward(request, response); // Forward to the user list JSP
+        List<User> listUser = userDAO.selectAllUsers();
+        request.setAttribute("listUser", listUser);
+        forwardToPage(request, response, USER_LIST_JSP);
     }
 
     /**
@@ -88,8 +94,7 @@ public class UserServlet extends HttpServlet {
      */
     private void showNewForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("ManageUsers/user-form.jsp");
-        dispatcher.forward(request, response); // Forward to the user form JSP
+        forwardToPage(request, response, USER_FORM_JSP);
     }
 
     /**
@@ -97,40 +102,82 @@ public class UserServlet extends HttpServlet {
      */
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id")); // Get user ID from request
-        User existingUser = userDAO.selectUser(id); // Retrieve user details by ID
-        request.setAttribute("user", existingUser); // Set the user as a request attribute
-        RequestDispatcher dispatcher = request.getRequestDispatcher("ManageUsers/user-form.jsp");
-        dispatcher.forward(request, response); // Forward to the user form JSP
+        int id = parseId(request);
+        User existingUser = userDAO.selectUser(id);
+        if (existingUser != null) {
+            request.setAttribute("user", existingUser);
+            forwardToPage(request, response, USER_FORM_JSP);
+        } else {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "User not found with ID: " + id);
+            log("User not found with ID: " + id);
+        }
     }
 
     /**
-     * Inserts a new user into the database. its so simple
+     * Inserts a new user into the database.
      */
-    private void insertUser(HttpServletRequest request, HttpServletResponse response) 
+    private void insertUser(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
-        // Get user details from the request
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-        String address = request.getParameter("address");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String role = request.getParameter("role");
-
-        // Create a new User object and insert it
-        User newUser = new User(name, email, phone, address, username, password, role);
-        userDAO.insertUser(newUser); // Insert user into the database
-        response.sendRedirect("userlist"); // Redirect to the user list page
+        User newUser = extractUserFromRequest(request);
+        if (isValidUser(newUser)) {
+            userDAO.insertUser(newUser);
+            log("User inserted successfully: " + newUser);
+            response.sendRedirect("userlist");
+        } else {
+            log("Invalid user data: " + newUser);
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid user data.");
+        }
     }
 
     /**
      * Updates an existing user's details in the database.
      */
-    private void updateUser(HttpServletRequest request, HttpServletResponse response) 
+    private void updateUser(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
-        int id = Integer.parseInt(request.getParameter("id")); // Get user ID from request
-        // Get updated user details from the request
+        int id = parseId(request);
+        User updatedUser = extractUserFromRequest(request);
+        updatedUser.setId(id);
+
+        if (isValidUser(updatedUser)) {
+            if (userDAO.updateUser(updatedUser)) {
+                log("User updated successfully: " + updatedUser);
+                response.sendRedirect("userlist");
+            } else {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "User not found with ID: " + id);
+                log("Failed to update user. User not found with ID: " + id);
+            }
+        } else {
+            log("Invalid user data: " + updatedUser);
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid user data.");
+        }
+    }
+
+    /**
+     * Deletes a user from the database.
+     */
+    private void deleteUser(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, IOException {
+        int id = parseId(request);
+        if (userDAO.deleteUser(id)) {
+            log("User deleted successfully with ID: " + id);
+            response.sendRedirect("userlist");
+        } else {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "User not found with ID: " + id);
+            log("Failed to delete user. User not found with ID: " + id);
+        }
+    }
+
+    /**
+     * Parses and validates the ID parameter from the request.
+     */
+    private int parseId(HttpServletRequest request) throws NumberFormatException {
+        return Integer.parseInt(request.getParameter("id"));
+    }
+
+    /**
+     * Extracts user data from the HTTP request and creates a User object.
+     */
+    private User extractUserFromRequest(HttpServletRequest request) {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
@@ -139,19 +186,23 @@ public class UserServlet extends HttpServlet {
         String password = request.getParameter("password");
         String role = request.getParameter("role");
 
-        // Create a User object with updated details and update it
-        User updatedUser = new User(id, name, email, phone, address, username, password, role);
-        userDAO.updateUser(updatedUser); // Update user in the database
-        response.sendRedirect("userlist"); // Redirect to the user list page
+        return new User(name, email, phone, address, username, password, role);
     }
 
     /**
-     * Deletes a user from the database.
+     * Validates user data.
      */
-    private void deleteUser(HttpServletRequest request, HttpServletResponse response) 
-            throws SQLException, IOException {
-        int id = Integer.parseInt(request.getParameter("id")); // Get user ID from request
-        userDAO.deleteUser(id); // Delete the user
-        response.sendRedirect("userlist"); // Redirect to the user list page
+    private boolean isValidUser(User user) {
+        return user.getName() != null && !user.getName().isEmpty() &&
+               user.getEmail() != null && !user.getEmail().isEmpty();
+    }
+
+    /**
+     * Forwards the request and response to the specified page.
+     */
+    private void forwardToPage(HttpServletRequest request, HttpServletResponse response, String page)
+            throws ServletException, IOException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher(page);
+        dispatcher.forward(request, response);
     }
 }

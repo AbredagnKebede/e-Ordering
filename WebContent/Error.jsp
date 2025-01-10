@@ -11,7 +11,6 @@
 
     <!-- Internal CSS for styling the page -->
     <style>
-        /* Body styling for center alignment and background gradient */
         body {
             font-family: 'Roboto', sans-serif;
             display: flex;
@@ -19,70 +18,88 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background: linear-gradient(120deg, #0f2027, #203a43, #2c5364); /* Gradient for background */
+            background: linear-gradient(135deg, #141e30, #243b55); /* Enhanced gradient */
             color: #fff;
+            animation: fadeIn 1.5s ease-in-out; /* Smooth fade-in animation */
         }
 
-        /* Container for the message and the button */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
         .message-container {
             text-align: center;
-            background: rgba(0, 0, 0, 0.7); /* Semi-transparent dark background */
+            background: rgba(0, 0, 0, 0.8);
             padding: 40px 60px;
-            border-radius: 20px; /* Rounded corners */
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Shadow for depth */
-            max-width: 400px; /* Maximum width of the container */
-            width: 90%; /* Ensures responsiveness on smaller screens */
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            max-width: 400px;
+            width: 90%;
+            animation: slideIn 1s ease-out; /* Slide-in animation */
         }
 
-        /* Styling for the main heading */
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
         h1 {
-            color: red;
-            font-size: 2.2em;
+            color: #e74c3c;
+            font-size: 2.5em;
             margin-bottom: 15px;
             font-weight: bold;
         }
 
-        /* Styling for the paragraph text */
         p {
-            color: #d4fc79; /* Light green color for readability */
-            font-size: 1em;
-            line-height: 1.5;
-            margin-bottom: 20px;
+            color: #ecf0f1;
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 25px;
         }
 
-        /* Styling for the button */
         .button {
             display: inline-block;
-            padding: 10px 20px;
+            padding: 12px 25px;
             font-size: 1em;
             color: #fff;
-            background-color: #1e90ff; /* Blue background color */
+            background: linear-gradient(135deg, #2980b9, #6dd5fa);
             border: none;
-            border-radius: 5px; /* Rounded corners */
+            border-radius: 5px;
             text-decoration: none;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s; /* Smooth transition on hover */
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
         }
 
-        /* Hover effect for the button */
         .button:hover {
-            background-color: #4682b4; /* Darker blue on hover */
-            transform: scale(1.05); /* Slightly enlarges the button */
+            background: linear-gradient(135deg, #1e90ff, #4682b4);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+        }
+
+        .button:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(30, 144, 255, 0.8);
         }
     </style>
 </head>
 
 <body>
-    <!-- Main container with message and button to go back to the login page -->
     <div class="message-container">
-        <!-- Title for the page, indicating an error or restriction -->
         <h1>Access Denied</h1>
-
-        <!-- Message to guide the user to enter credentials correctly -->
-        <p>Please ensure you enter your credentials correctly to proceed.</p>
-
-        <!-- Button that links back to the login page -->
-        <a href="login.jsp" class="button">Back to Login</a>
+        <p>Please ensure you enter your credentials correctly to proceed. If the problem persists, contact support.</p>
+        <a href="login.jsp" class="button" aria-label="Return to login page">Back to Login</a>
     </div>
 </body>
 

@@ -41,7 +41,7 @@ Copy code
 jar -cvf your-project.war -C WebContent/ .
 Replace your-project.war with your preferred WAR file name. Ensure that WebContent/ is the correct directory containing your web application content (like WEB-INF, JSP files, etc.).
 
-2.Deploy the WAR File on Tomcat:
+2.Deploy the WAR File on Tomcats:
 
 Open Tomcat (either using the VS Code extension or your local Tomcat installation).
 Right-click on the newly created WAR file and choose "Run on Tomcat". This will deploy the WAR file to the Tomcat server.

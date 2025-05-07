@@ -12,7 +12,7 @@ public class LoginBean implements Serializable {
     // Unique identifier for serialization
     private static final long serialVersionUID = 1L;
 
-    // Username for login
+    // Username for logins
     private String username;
 
     // Password for login

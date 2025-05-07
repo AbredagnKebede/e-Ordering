@@ -9,13 +9,13 @@ package com.ManageMenu;
  */
 public class Product {
 
-	// Unique ID for the product (e.g., from the database)
+	// Unique ID for the product (e.g., from the database).
 	protected int productId;
 
 	// Product's name (e.g., "Burger", "Juice")
 	protected String productName;
 
-	// The category this product belongs to (e.g., "Food", "Beverages")
+	// The category this product belongs to (e.g., "Food", "Beverages").
 	protected String productCategory;
 
 	// How much the product costs

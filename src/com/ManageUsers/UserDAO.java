@@ -13,7 +13,7 @@ import java.util.List;
  * This DAO class provides CRUD database operations for the table users in the database.
  */
 public class UserDAO {
-    // JDBC URL, username, and password for connecting to the database
+    // JDBC URL, username, and password for connecting to the database.
     private final String jdbcURL = "jdbc:mysql://localhost:3306/yumride?useSSL=false";
     private final String jdbcUsername = "root";
     private final String jdbcPassword = "bare@coat";
